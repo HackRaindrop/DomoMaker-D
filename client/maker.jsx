@@ -9,13 +9,16 @@ const handleDomo = (e, onDomoAdded) => {
 
     const name = e.target.querySelector('#domoName').value;
     const age = e.target.querySelector('#domoAge').value;
+    const attack = e.target.querySelector('#domoAttack').value;
+    const health = e.target.querySelector('#domoHealth').value;
+    const level = e.target.querySelector('#domoLevel').value;
 
-    if (!name || !age) {
+    if (!name || !age || !attack || !health || !level) {
         helper.handleError("All fields are required!");
         return false;
     }
 
-    helper.sendPost(e.target.action, { name, age }, onDomoAdded);
+    helper.sendPost(e.target.action, { name, age, attack, health, level }, onDomoAdded);
     return false;
 };
 
@@ -30,8 +33,19 @@ const DomoForm = (props) => {
         >
             <label htmlFor='name'>Name: </label>
             <input id='domoName' type='text' name='name' placeholder='Domo Name' />
+
             <label htmlFor='age'>Age: </label>
             <input id='domoAge' type='number' min='0' name='age' />
+
+            <label htmlFor='attack'>Attack: </label>
+            <input id='domoAttack' type='number' min='0' name='attack' />
+
+            <label htmlFor='health'>Health: </label>
+            <input id='domoHealth' type='number' min='0' name='health' />
+
+            <label htmlFor='level'>Level: </label>
+            <input id='domoLevel' type='number' min='1' name='level' />
+
             <input className='makeDomoSubmit' type='submit' value='Make a Domo' />
         </form>
     );
@@ -61,8 +75,13 @@ const DomoList = (props) => {
         return (
             <div key={domo.id} className='domo'>
                 <img src='assets/img/domoface.jpeg' alt='domo face' className='domoFace' />
-                <h3 className='domoName'>Name: {domo.name}</h3>
-                <h3 className='domoAge'>Age: {domo.age}</h3>
+                <div>
+                    <h3 className='domoName'>{domo.name}</h3>
+                    <h3 className='domoAge'>Age: {domo.age}</h3>
+                    <h3 className='domoLevel'>Level: {domo.level}</h3>
+                    <h3 className='domoAttack'>Attack: {domo.attack}</h3>
+                    <h3 className='domoHealth'>Health: {domo.health}</h3>
+                </div>
             </div>
         );
     });

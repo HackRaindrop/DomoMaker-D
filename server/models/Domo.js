@@ -15,6 +15,21 @@ const DomoSchema = new mongoose.Schema({
     min: 0,
     required: true,
   },
+  attack: {
+    type: Number,
+    min: 0,
+    required: true,
+  },
+  health: {
+    type: Number,
+    min: 0,
+    required: true,
+  },
+  level: {
+    type: Number,
+    min: 1,
+    required: true,
+  },
   owner: {
     type: mongoose.Schema.ObjectId,
     required: true,
@@ -29,6 +44,9 @@ const DomoSchema = new mongoose.Schema({
 DomoSchema.statics.toAPI = (doc) => ({
   name: doc.name,
   age: doc.age,
+  attack: doc.attack,
+  health: doc.health,
+  level: doc.level,
 });
 
 const DomoModel = mongoose.model('Domo', DomoSchema);
