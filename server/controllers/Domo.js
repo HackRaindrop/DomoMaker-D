@@ -42,8 +42,56 @@ const getDomos = async (req, res) => {
   }
 };
 
+const trainDomo = async (req, res) => {
+  if (!req.body.domoId || !req.body.stat) {
+    return res.status(400).json({ error: 'Domo ID and stat are required' });
+  }
+
+  try {
+    const domo = await Domo.findOne({ _id: req.body.domoId, owner: req.session.account._id });
+    
+    if (!domo) {
+      return res.status(404).json({ error: 'Domo not found' });
+    }
+
+    // Train the specified stat
+    switch (req.body.stat) {
+      case 'attack':
+        domo.attack += 5;
+        break;
+      case 'health':
+        domo.health += 10;
+        break;
+      case 'level':
+        domo.level += 1;
+        break;
+      default:
+        return res.status(400).json({ error: 'Invalid stat type' });
+    }
+
+    await domo.save();
+    return res.json({ 
+      message: `${domo.name} trained successfully!`,
+      domo: {
+        name: domo.name,
+        age: domo.age,
+        attack: domo.attack,
+        health: domo.health,
+        level: domo.level
+      }
+    });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ error: 'An error occurred while training' });
+  }
+};
+
+const trainingPage = (req, res) => res.render('training');
+
 module.exports = {
   makeDomo,
   getDomos,
   makerPage,
+  trainDomo,
+  trainingPage,
 };
