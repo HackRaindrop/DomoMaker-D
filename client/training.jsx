@@ -43,7 +43,7 @@ const TrainingList = (props) => {
             return;
         }
         handleTraining(
-            { preventDefault: () => {} },
+            { preventDefault: () => { } },
             selectedDomo._id,
             stat,
             props.triggerReload
@@ -53,8 +53,8 @@ const TrainingList = (props) => {
     const domoNodes = domos.map(domo => {
         const isSelected = selectedDomo && selectedDomo._id === domo._id;
         return (
-            <div 
-                key={domo._id} 
+            <div
+                key={domo._id}
                 className={`domo ${isSelected ? 'selected' : ''}`}
                 onClick={() => setSelectedDomo(domo)}
                 style={{ cursor: 'pointer', border: isSelected ? '3px solid #4CAF50' : '1px solid #ccc' }}
@@ -82,20 +82,20 @@ const TrainingList = (props) => {
                     <h2>Training {selectedDomo.name}</h2>
                     <p>Choose a stat to improve:</p>
                     <div className='trainingButtons'>
-                        <button 
-                            className='trainButton attackButton' 
+                        <button
+                            className='trainButton attackButton'
                             onClick={() => handleTrainStat('attack')}
                         >
                             Train Attack (+5)
                         </button>
-                        <button 
-                            className='trainButton healthButton' 
+                        <button
+                            className='trainButton healthButton'
                             onClick={() => handleTrainStat('health')}
                         >
                             Train Health (+10)
                         </button>
-                        <button 
-                            className='trainButton levelButton' 
+                        <button
+                            className='trainButton levelButton'
                             onClick={() => handleTrainStat('level')}
                         >
                             Level Up (+1)

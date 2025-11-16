@@ -19,7 +19,13 @@ const makeDomo = async (req, res) => {
   try {
     const newDomo = new Domo(domoData);
     await newDomo.save();
-    return res.status(201).json({ name: newDomo.name, age: newDomo.age, attack: newDomo.attack, health: newDomo.health, level: newDomo.level });
+    return res.status(201).json({
+      name: newDomo.name,
+      age: newDomo.age,
+      attack: newDomo.attack,
+      health: newDomo.health,
+      level: newDomo.level,
+    });
   } catch (err) {
     console.log(err);
     if (err.code === 11000) {
@@ -49,7 +55,7 @@ const trainDomo = async (req, res) => {
 
   try {
     const domo = await Domo.findOne({ _id: req.body.domoId, owner: req.session.account._id });
-    
+
     if (!domo) {
       return res.status(404).json({ error: 'Domo not found' });
     }
@@ -70,15 +76,15 @@ const trainDomo = async (req, res) => {
     }
 
     await domo.save();
-    return res.json({ 
+    return res.json({
       message: `${domo.name} trained successfully!`,
       domo: {
         name: domo.name,
         age: domo.age,
         attack: domo.attack,
         health: domo.health,
-        level: domo.level
-      }
+        level: domo.level,
+      },
     });
   } catch (err) {
     console.log(err);
